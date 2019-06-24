@@ -1,0 +1,16 @@
+version: "3.1"
+services:
+  app:
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+      - 8001:443
+    volumes:
+      - ./settings/appsettings.json:/app/appsettings.json
+      - ./settings/cert-aspnetcore.pfx:/root/.dotnet/https/cert-aspnetcore.pfx
+    environment:
+      - ASPNETCORE_URLS=https://+;http://+
+      - Kestrel__Certificates__Default__Path=/root/.dotnet/https/cert-aspnetcore.pfx
+      - Kestrel__Certificates__Default__Password=1234
